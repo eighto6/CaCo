@@ -2,7 +2,6 @@ import argparse
 from dgl.data import register_data_args
 import logging
 from optim import multrainer
-from optim.loss import loss_function, init_center
 from datasets import dataloader
 from networks.init import init_model
 import numpy as np
@@ -26,7 +25,7 @@ def main(args):
     checkpoints_path = f'./checkpoints/{args.dataset}-{args.module}-{args.lamda}+bestcheckpoint.pt'
     logging.basicConfig(filename=f"./log/{args.dataset}-{args.module}-{args.lamda}.log", filemode="a",
                         format="%(asctime)s-%(name)s-%(levelname)s-%(message)s", level=logging.INFO)
-    logger = logging.getLogger('Caco')
+    logger = logging.getLogger('CaCo')
     data = dataloader.loader(args)
     model = init_model(args, data['input_dim'], len(data['features']))
     model = multrainer.train(args, logger, data, model, checkpoints_path)
@@ -35,9 +34,9 @@ def main(args):
 
 
 DATASETS_NAME = {
-  'cora': 7,
-  'citeseer': 6,
-  'pubmed': 3,
+  # 'cora': 7,
+  # 'citeseer': 6,
+  # 'pubmed': 3,
   'BlogCatalog':6,
   'Flickr':9,
    'ACM':9,
@@ -119,7 +118,7 @@ if __name__ == '__main__':
         MAX_EPOCHs = {}
         for normal_idx in range(DATASETS_NAME[dataset_name]):
             args.abclass = normal_idx
-            if args.dataset in ['BlogCatalog', 'Flickr', 'ACM'] and args.datamode != 'AD':
+            if args.dataset in ['BlogCatalog', 'Flickr', 'ACM']:
                 normal_idx += 1
 
             print("[INFO] Dataset={}, Normal Label={}".format(dataset_name, normal_idx))
