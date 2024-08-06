@@ -1,16 +1,12 @@
 from dgl.data import load_data
 from dgl import DGLGraph
-import dgl
-import scipy
-import torch
 import torch.utils.data
 import numpy as np
 import torch
 import scipy.sparse as sp
 import networkx as nx
 from datasets.prepocessing import one_class_processing
-from datasets.input_data import LoadData,LoadAnomaly
-from networkx.algorithms import community
+from datasets.input_data import LoadData
 def loader(args):
     # load and preprocess dataset
     if args.dataset in ['cora', 'citeseer', 'pubmed']:
